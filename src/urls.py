@@ -27,6 +27,7 @@ urlpatterns = [
     # admin panel
     path('admin/', admin.site.urls),
     path('job-seeker/', include('src.job_seeker.urls')),
+    path('employer/', include('src.employer.urls')),
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # summernote editor
     path('summernote/', include('django_summernote.urls')),
