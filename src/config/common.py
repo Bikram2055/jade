@@ -1,11 +1,11 @@
 import os
-import sentry_sdk
 import sys
-import dotenv
-
 from datetime import timedelta
-from sentry_sdk.integrations.django import DjangoIntegration
 from os.path import join
+
+import dotenv
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 TESTING = sys.argv[1:2] == ['test']
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'src.social',
     'src.files',
     'src.common',
+    'src.job_seeker',
     # Third party optional apps
     # app must be placed somewhere after all the apps that are going to be generating activities
     # 'actstream',                  # activity stream
@@ -234,7 +235,8 @@ AUTHENTICATION_BACKENDS = (
     'src.users.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-for key in ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET', 'TWITTER_KEY', 'TWITTER_SECRET']:
+a = ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET', 'TWITTER_KEY', 'TWITTER_SECRET']
+for key in a:
     exec("SOCIAL_AUTH_{key} = os.environ.get('{key}', '')".format(key=key))
 
 # FB
@@ -289,11 +291,11 @@ THUMBNAIL_ALIASES = {
 }
 
 # Django Rest Framework
-
+ab = ['django_filters.rest_framework.DjangoFilterBackend', 'rest_framework.filters.OrderingFilter']
 # Django Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend', 'rest_framework.filters.OrderingFilter'],
+    'DEFAULT_FILTER_BACKENDS': ab,
     'PAGE_SIZE': int(os.getenv('DJANGO_PAGINATION_LIMIT', 18)),
     'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S.%fZ',
     'DEFAULT_RENDERER_CLASSES': (
