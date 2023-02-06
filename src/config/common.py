@@ -54,7 +54,9 @@ INSTALLED_APPS = (
     'src.common',
     'src.job_seeker',
     'src.employer',
+    'src.job',
     # Third party optional apps
+    'phone_field',
     # app must be placed somewhere after all the apps that are going to be generating activities
     # 'actstream',                  # activity stream
 )

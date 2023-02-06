@@ -1,16 +1,17 @@
 import uuid
+
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.dispatch import receiver
-from django.contrib.auth.models import AbstractUser
-from rest_framework_simplejwt.tokens import RefreshToken
-from easy_thumbnails.fields import ThumbnailerImageField
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
-from easy_thumbnails.signals import saved_file
+from easy_thumbnails.fields import ThumbnailerImageField
 from easy_thumbnails.signal_handlers import generate_aliases_global
+from easy_thumbnails.signals import saved_file
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from src.common.helpers import build_absolute_uri
-from src.notifications.services import notify, ACTIVITY_USER_RESETS_PASS
+from src.notifications.services import ACTIVITY_USER_RESETS_PASS, notify
 
 
 @receiver(reset_password_token_created)
@@ -46,3 +47,15 @@ class User(AbstractUser):
 
 
 saved_file.connect(generate_aliases_global)
+
+
+class TimeStampAbstractModel(models.Model):
+    """Inherit from this class to add timestamp fields in the model class"""
+
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    """DateField: date on which the instance is created."""
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    """DateField: date on which the instance is updated."""
+
+    class Meta:
+        abstract = True
