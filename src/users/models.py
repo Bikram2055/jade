@@ -59,3 +59,10 @@ class TimeStampAbstractModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Address(TimeStampAbstractModel):
+    country = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    street = models.CharField(max_length=30)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
