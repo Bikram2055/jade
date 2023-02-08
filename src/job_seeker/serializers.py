@@ -10,5 +10,6 @@ class Job_SeekerSerializer(serializers.ModelSerializer):
 
 
 class SeekerSkillSerializer(serializers.ModelSerializer):
-    model = Skill
-    fields = ['skill', 'job_seeker']
+    class Meta:
+        model = Skill
+        fields = ['skill', 'job_seeker']
