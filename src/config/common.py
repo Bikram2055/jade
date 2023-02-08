@@ -233,14 +233,17 @@ AUTH_USER_MODEL = 'users.User'
 
 # Social login
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.apple.AppleIdAuth',
     'src.users.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-a = ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET', 'TWITTER_KEY', 'TWITTER_SECRET']
-for key in a:
+secret_key = ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET']
+for key in secret_key:
     exec("SOCIAL_AUTH_{key} = os.environ.get('{key}', '')".format(key=key))
+
 
 # FB
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']

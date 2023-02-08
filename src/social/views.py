@@ -1,11 +1,11 @@
 from django.conf import settings
+from django.shortcuts import redirect
+from requests.exceptions import HTTPError
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from requests.exceptions import HTTPError
 from social_django.utils import psa
-from django.shortcuts import redirect
 
 from .serializers import SocialSerializer
 
@@ -13,6 +13,14 @@ from .serializers import SocialSerializer
 @api_view(http_method_names=['GET'])
 @permission_classes([AllowAny])
 def complete_twitter_login(request, *args, **kwargs):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     tokens = request.user.get_tokens()
     access_token = tokens['access']
     refresh_token = tokens['refresh']

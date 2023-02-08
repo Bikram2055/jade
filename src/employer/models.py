@@ -10,3 +10,6 @@ class Employer(TimeStampAbstractModel):
     description = models.CharField(max_length=250)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = PhoneField(blank=True, help_text='Contact phone number')
+
+    def __str__(self) -> str:
+        return self.user.username

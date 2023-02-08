@@ -62,7 +62,13 @@ class TimeStampAbstractModel(models.Model):
 
 
 class Address(TimeStampAbstractModel):
+    '''This class to add user address'''
+
     country = models.CharField(max_length=30)
+    '''CharField: country of user'''
     city = models.CharField(max_length=30)
+    '''CharField: city of user'''
     street = models.CharField(max_length=30)
+    '''CharField: street of user'''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    '''OneToOneField: one user linked with one address'''

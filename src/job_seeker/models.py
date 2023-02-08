@@ -14,6 +14,9 @@ class Job_Seeker(TimeStampAbstractModel):
     phone = PhoneField(blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.user.username
+
 
 class Skill(TimeStampAbstractModel):
 
