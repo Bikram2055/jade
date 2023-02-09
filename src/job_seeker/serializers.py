@@ -36,6 +36,15 @@ class Job_SeekerSerializer(serializers.ModelSerializer):
             job_seeker.skill.add(instance)
         return job_seeker
 
+    def update(self, instance, validated_data):
+        skills = validated_data.pop('skill')
+        job_seeker = super().update(instance, validated_data)
+        job_seeker.skill.clear()
+        for skill in skills:
+            instance, created = Skill.objects.get_or_create(skill=skill['skill'])
+            job_seeker.skill.add(instance)
+        return job_seeker
+
     class Meta:
         model = Job_Seeker
         # depth = 1

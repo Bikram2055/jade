@@ -43,8 +43,20 @@ class Number_Of_JObs(APIView):
 
 
 class Job_Count_Category(APIView):
-    def get(self, request):
+    """This is a Python class that implements an API endpoint for getting the count of job posts in each category.
+    The class is a subclass of APIView from the Django REST framework and defines a single method, get,
+     which implements the endpoint.
+    """
 
+    def get(self, request):
+        """api get method
+
+        Args:
+            request (object): used to get data from endpoint
+
+        Returns:
+            data(json): category wise job count
+        """
         data = Job.objects.values('category__category').annotate(count=Count('id'))
         serializer = CategorywiseJobSerializer(data=data, many=True)
         if serializer.is_valid():
@@ -53,7 +65,21 @@ class Job_Count_Category(APIView):
 
 
 class JobAge(APIView):
+    """This is a Python class that implements an API endpoint for getting the age of a job post in days.
+    The class is a subclass of APIView from the Django REST framework and defines a single method, get,
+     which implements the endpoint.
+    """
+
     def get(self, request, id):
+        """api get method
+
+        Args:
+            request (object): used to get data from endpoint
+            id (int): job id
+
+        Returns:
+            age(int): age of job
+        """
 
         today = datetime.date.today()
         job_post_date = get_object_or_404(Job, id=id)

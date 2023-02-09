@@ -15,6 +15,19 @@ from src.job_seeker.serializers import Job_SeekerSerializer, SeekerSkillSerializ
 
 
 class Seekers(generics.ListCreateAPIView):
+    """This is a Django class-based view for handling the creation and retrieval of "Job Seeker" objects.
+     The view is using Django Rest Framework's generics.ListCreateAPIView class, which provides the ability
+      to list and create instances of a model.
+
+    The queryset attribute specifies the set of objects that the view should operate on and it is set to
+    Job_Seeker.objects.all(), meaning that it will operate on all objects of the Job_Seeker model.
+
+    The serializer_class attribute specifies the serializer class that should be used to serialize the
+    data for the view. It is set to Job_SeekerSerializer.
+
+    The permission_classes attribute specifies the permission classes that should be applied to the view.
+    It is set to [permissions.AllowAny], meaning that the view is accessible to anyone, including
+    unauthenticated users."""
 
     queryset = Job_Seeker.objects.all()
     serializer_class = Job_SeekerSerializer
@@ -45,12 +58,33 @@ class SeekerUpdate(generics.RetrieveUpdateDestroyAPIView):
 
 
 class SeekerSkillUpdate(generics.RetrieveUpdateDestroyAPIView):
+    """This is a Django class-based view for handling updates to the "Skill" model for seekers.
+     The view is using Django Rest Framework's generics.RetrieveUpdateDestroyAPIView class, which
+      provides the ability to retrieve, update, and delete a single instance of a model.
+
+    The queryset attribute specifies the set of objects that the view should operate on and it is
+    set to Skill.objects.all(), meaning that it will operate on all objects of the Skill model.
+
+    The serializer_class attribute specifies the serializer class that should be used to serialize
+    the data for the view. It is set to SeekerSkillSerializer. This means that the view is using a
+    custom serializer class for the Skill model specifically for seekers."""
 
     queryset = Skill.objects.all()
     serializer_class = SeekerSkillSerializer
 
 
 class SeekerSkill(generics.ListCreateAPIView):
+    """This is a Django class-based view for handling the creation and retrieval of "Skill" objects
+     for seekers. The view is using Django Rest Framework's generics.ListCreateAPIView class, which
+      provides the ability to list and create instances of a model.
+
+    The queryset attribute specifies the set of objects that the view should operate on and it is set to
+    Skill.objects.all(), meaning that it will operate on all objects of the Skill model.
+
+    The serializer_class attribute specifies the serializer class that should be used to serialize the data
+    for the view. It is set to SeekerSkillSerializer. This means that the view is using a custom serializer
+    class for the Skill model specifically for seekers.
+    """
 
     queryset = Skill.objects.all()
     serializer_class = SeekerSkillSerializer
