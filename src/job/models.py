@@ -4,7 +4,12 @@ from src.employer.models import Employer
 from src.job_seeker.models import Job_Seeker
 from src.users.models import TimeStampAbstractModel
 
+
 # Create your models here.
+class Category(TimeStampAbstractModel):
+    '''This class for add category for jobs'''
+
+    category = models.CharField(max_length=30)
 
 
 class Job(TimeStampAbstractModel):
@@ -14,6 +19,8 @@ class Job(TimeStampAbstractModel):
     '''CharField: for name of project'''
     description = models.CharField(max_length=250)
     '''CharField: for description of project'''
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    '''ForeginKey: for category of the project'''
     budget = models.FloatField()
     '''FloatField: for define budget of project'''
     duration = models.DateField(null=True)
