@@ -48,8 +48,8 @@ class Job_Count_Category(APIView):
         data = Job.objects.values('category__category').annotate(count=Count('id'))
         serializer = CategorywiseJobSerializer(data=data, many=True)
         if serializer.is_valid():
-            return Response(serializer.data)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            serializer = serializer
+        return Response(serializer.data)
 
 
 class JobAge(APIView):
