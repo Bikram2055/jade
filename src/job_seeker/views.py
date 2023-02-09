@@ -1,4 +1,6 @@
 from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from src.job_seeker.models import Job_Seeker, Skill
 from src.job_seeker.serializers import Job_SeekerSerializer, SeekerSkillSerializer
@@ -52,3 +54,16 @@ class SeekerSkill(generics.ListCreateAPIView):
 
     queryset = Skill.objects.all()
     serializer_class = SeekerSkillSerializer
+
+
+class Number_Of_Job_seekers(APIView):
+    """
+    View to list all users in the system.
+    """
+
+    def get(self, request):
+        """
+        Return a list of all users.
+        """
+        no_of_job_seekers = Job_Seeker.objects.all().count()
+        return Response({"Job_seekers count": no_of_job_seekers})

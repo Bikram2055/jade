@@ -7,4 +7,5 @@ urlpatterns = [
     path("update/<int:pk>", views.SeekerUpdate.as_view()),
     path("skills/", views.SeekerSkill.as_view(), name="add-skills"),
     path("skill-update/<int:pk>", views.SeekerSkillUpdate.as_view(), name="update-skills"),
+    path("no-of-jobseekers/", views.Number_Of_Job_seekers.as_view()),
 ]
