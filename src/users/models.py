@@ -32,7 +32,14 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(
+        verbose_name="Email address",
+        max_length=255,
+        unique=True,
+    )
     profile_picture = ThumbnailerImageField('ProfilePicture', upload_to='profile_pictures/', blank=True, null=True)
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     def get_tokens(self):
         refresh = RefreshToken.for_user(self)

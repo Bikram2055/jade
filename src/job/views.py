@@ -89,8 +89,9 @@ class JobAge(APIView):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class SearchJob(generics.ListCreateAPIView):
-    search_fields = ['name']
+class SearchJob(generics.ListAPIView):
+
+    search_fields = ['name', 'description']
     filter_backends = (filters.SearchFilter,)
     queryset = Job.objects.all()
     serializer_class = JobSerializer

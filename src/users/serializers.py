@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from src.common.serializers import ThumbnailerJSONSerializer
 from src.users.models import User
 
 
@@ -9,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id',
+            'email',
             'username',
             'first_name',
             'last_name',
@@ -18,7 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
-    profile_picture = ThumbnailerJSONSerializer(required=False, allow_null=True, alias_target='src.users')
     tokens = serializers.SerializerMethodField()
 
     def get_tokens(self, user):
