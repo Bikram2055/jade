@@ -1,12 +1,10 @@
 from rest_framework import serializers
 
-from src.users.models import User
 from src.common.serializers import ThumbnailerJSONSerializer
+from src.users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    profile_picture = ThumbnailerJSONSerializer(required=False, allow_null=True, alias_target='src.users')
-
     class Meta:
         model = User
         fields = (

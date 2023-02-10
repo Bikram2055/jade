@@ -5,10 +5,6 @@ from rest_framework.views import APIView
 from src.job_seeker.models import Job_Seeker, Skill
 from src.job_seeker.serializers import Job_SeekerSerializer, SeekerSkillSerializer
 
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
-
-
 # from src.users.models import User
 
 # Create your views here.

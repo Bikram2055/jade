@@ -2,7 +2,7 @@ import datetime
 
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, permissions, status
+from rest_framework import filters, generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -87,3 +87,10 @@ class JobAge(APIView):
             age = -(datetime.datetime.date(job_post_date.created_at) - today).days
             return Response({'age': age})
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class SearchJob(generics.ListCreateAPIView):
+    search_fields = ['name']
+    filter_backends = (filters.SearchFilter,)
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
