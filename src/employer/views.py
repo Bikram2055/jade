@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -5,8 +6,8 @@ from rest_framework.views import APIView
 from src.common.permissions import IsEmployer
 from src.employer.models import Employer
 from src.employer.serializers import EmployerSerializer
-from src.job.models import Rating
-from src.job.serializers import RateSerializer
+from src.job.models import Job, Rating
+from src.job.serializers import JobSerializer, RateSerializer
 
 # Create your views here.
 
@@ -55,3 +56,10 @@ class RateApi(generics.ListCreateAPIView):
     permission_classes = [
         IsEmployer,
     ]
+
+
+class DraftJob(LoginRequiredMixin, generics.ListAPIView):
+
+    queryset = Job.objects.filter(is_draft=True)
+    serializer_class = JobSerializer
+    permission_classes = [IsEmployer]
