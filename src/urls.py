@@ -10,7 +10,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from src.files.urls import files_router
-from src.social.views import complete_twitter_login, exchange_token
+from src.social.views import FacebookLoginView, complete_twitter_login, exchange_token
 from src.users.urls import users_router
 
 schema_view = get_schema_view(
@@ -42,6 +42,7 @@ urlpatterns = [
     # social login
     url('', include('social_django.urls', namespace='social')),
     url(r'^complete/twitter/', complete_twitter_login),
+    url(r'^complete/facebook/', FacebookLoginView.as_view()),
     url(r'^api/v1/social/(?P<backend>[^/]+)/$', exchange_token),
     # swagger docs
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),

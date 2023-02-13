@@ -2,8 +2,11 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from src.common.permissions import IsEmployer
 from src.employer.models import Employer
 from src.employer.serializers import EmployerSerializer
+from src.job.models import Rating
+from src.job.serializers import RateSerializer
 
 # Create your views here.
 
@@ -43,3 +46,12 @@ class Number_Of_Employers(APIView):
         """
         no_of_employers = Employer.objects.all().count()
         return Response({"employers count": no_of_employers})
+
+
+class RateApi(generics.ListCreateAPIView):
+
+    queryset = Rating.objects.all()
+    serializer_class = RateSerializer
+    permission_classes = [
+        IsEmployer,
+    ]

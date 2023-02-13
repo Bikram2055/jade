@@ -3,11 +3,25 @@ from django.shortcuts import redirect
 from requests.exceptions import HTTPError
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from social_django.utils import psa
+from social_django.views import complete
 
 from .serializers import SocialSerializer
+
+
+class FacebookLoginView(CreateAPIView):
+    def post(self, request, *args, **kwargs):
+        complete_view = complete(request, 'facebook')
+        response = complete_view(request, *args, **kwargs)
+        if response.status_code == status.HTTP_302_FOUND:
+            # user = request.user
+            # Perform additional steps, such as creating a user or token
+            # ...
+            return Response({'message': 'Login successful'})
+        return response
 
 
 @api_view(http_method_names=['GET'])

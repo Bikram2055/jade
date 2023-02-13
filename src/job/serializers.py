@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from src.job.models import Job
+from src.job.models import Job, Rating
 
 
 class JobSerializer(serializers.ModelSerializer):
@@ -13,3 +13,9 @@ class CategorywiseJobSerializer(serializers.Serializer):
 
     category__category = serializers.CharField()
     count = serializers.IntegerField()
+
+
+class RateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ['employer', 'job_seeker', 'job', 'rating', 'feedback']

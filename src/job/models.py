@@ -80,3 +80,12 @@ class Bid(TimeStampAbstractModel):
     '''CharField: for set milestone of project'''
     is_shortlisted = models.BooleanField(default=False)
     '''BooleanField: for status of shortlisted job seeker by employer'''
+
+
+class Rating(TimeStampAbstractModel):
+
+    employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    job_seeker = models.ForeignKey(Job_Seeker, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    rating = models.FloatField()
+    feedback = models.CharField(max_length=250, null=True, blank=True)
