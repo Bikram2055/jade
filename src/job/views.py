@@ -7,8 +7,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from src.common.permissions import IsEmployer
-from src.job.models import Job
-from src.job.serializers import CategorywiseJobSerializer, JobSerializer
+from src.job.models import Bid, Job
+from src.job.serializers import (
+    BidSerializer,
+    CategorywiseJobSerializer,
+    JobSerializer,
+    ShortlistSerializer,
+)
 
 # from src.users.models import User
 
@@ -95,3 +100,23 @@ class SearchJob(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     queryset = Job.objects.all()
     serializer_class = JobSerializer
+
+
+class BidCreateApi(generics.ListCreateAPIView):
+
+    queryset = Bid.objects.all()
+    serializer_class = BidSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BidUpdateApi(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Bid.objects.all()
+    serializer_class = BidSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ShortlistApi(generics.RetrieveUpdateAPIView):
+    queryset = Bid.objects.all()
+    serializer_class = ShortlistSerializer
+    permission_classes = [IsEmployer]

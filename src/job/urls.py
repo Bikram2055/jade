@@ -9,4 +9,7 @@ urlpatterns = [
     path("categorywise-jobcount/", views.Job_Count_Category.as_view()),
     path("job-age/<int:id>", views.JobAge.as_view()),
     path("search/", views.SearchJob.as_view()),
+    path("bid/", views.BidCreateApi.as_view()),
+    path("bid-update/", views.BidUpdateApi.as_view()),
+    path("shotlist/<int:pk>", views.ShortlistApi.as_view()),
 ]
