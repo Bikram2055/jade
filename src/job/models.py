@@ -83,9 +83,22 @@ class Bid(TimeStampAbstractModel):
 
 
 class Rating(TimeStampAbstractModel):
+    """This is a Django model definition for a Rating model.
+    The Rating model inherits from a custom abstract model named TimeStampAbstractModel,
+    which presumably adds timestamp fields for created and modified dates to the Rating model.
+    """
 
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    '''employer: A foreign key to the Employer model, with a CASCADE on delete behavior.
+    This field represents the employer who submitted the rating.'''
     job_seeker = models.ForeignKey(Job_Seeker, on_delete=models.CASCADE)
+    '''job_seeker: A foreign key to the Job_Seeker model, with a CASCADE on delete behavior.
+    This field represents the job seeker who was rated.'''
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    '''job: A foreign key to the Job model, with a CASCADE on delete behavior.
+    This field represents the job that the rating is associated with.'''
     rating = models.FloatField()
+    '''rating: A floating-point field representing the rating score given by the employer to the job seeker.'''
     feedback = models.CharField(max_length=250, null=True, blank=True)
+    '''feedback: A string field with a maximum length of 250 characters, representing any feedback or comments the
+    employer may have provided along with the rating. This field is optional, as it allows null and blank values.'''
