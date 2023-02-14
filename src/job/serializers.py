@@ -15,6 +15,16 @@ class CategorywiseJobSerializer(serializers.Serializer):
     count = serializers.IntegerField()
 
 
+class BidperJobSerializer(serializers.Serializer):
+
+    job__name = serializers.CharField()
+    count = serializers.IntegerField()
+
+    # class Meta:
+    #     model = Bid
+    #     fields = ['job', 'count']
+
+
 class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating

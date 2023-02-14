@@ -12,4 +12,5 @@ urlpatterns = [
     path("bid/", views.BidCreateApi.as_view()),
     path("bid-update/", views.BidUpdateApi.as_view()),
     path("shotlist/<int:pk>", views.ShortlistApi.as_view()),
+    path("bids-per-job/", views.BidsPerJob.as_view()),
 ]

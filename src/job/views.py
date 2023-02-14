@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from src.common.permissions import IsEmployer
 from src.job.models import Bid, Job
 from src.job.serializers import (
+    BidperJobSerializer,
     BidSerializer,
     CategorywiseJobSerializer,
     JobSerializer,
@@ -189,3 +190,12 @@ class JobApi(generics.ListCreateAPIView):
     serializer_class = JobSerializer
     permission_classes = [permissions.IsAuthenticated, IsEmployer]
     pagination_class = LargeResultsSetPagination
+
+
+class BidsPerJob(APIView):
+    def get(self, request):
+        data = Bid.objects.values('job__name').annotate(count=Count('id'))
+        serializer = BidperJobSerializer(data=data, many=True)
+        if serializer.is_valid():
+            pass
+        return Response(serializer.data)
