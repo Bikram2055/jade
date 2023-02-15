@@ -1,12 +1,57 @@
 from rest_framework import serializers
 
-from src.job.models import Bid, Job, Rating
+from src.employer.serializers import EmployernameSerializer
+from src.job.models import Bid, Category, Job, Rating, Required_Skill
+
+
+class RequireskillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Required_Skill
+        fields = ['skill']
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['category']
 
 
 class JobSerializer(serializers.ModelSerializer):
+
+    skill = RequireskillSerializer(many=True)
+    category_name = CategorySerializer(source='category')
+    employer_data = EmployernameSerializer(source='employer')
+
+    def create(self, validated_data):
+        skills = validated_data.pop('skill')
+        job = super().create(validated_data)
+        for skill in skills:
+            instance, created = Required_Skill.objects.get_or_create(skill=skill['skill'])
+            job.skill.add(instance)
+        return job
+
+    def update(self, instance, validated_data):
+        skills = validated_data.pop('skill')
+        job = super().update(instance, validated_data)
+        job.skill.clear()
+        for skill in skills:
+            instance, created = Required_Skill.objects.get_or_create(skill=skill['skill'])
+            job.skill.add(instance)
+        return job
+
     class Meta:
         model = Job
-        fields = ['name', 'description', 'category', 'budget', 'duration', 'requirement', 'employer', 'is_draft']
+        fields = [
+            'name',
+            'description',
+            'category_name',
+            'budget',
+            'duration',
+            'requirement',
+            'employer_data',
+            'is_draft',
+            'skill',
+        ]
 
 
 class CategorywiseJobSerializer(serializers.Serializer):

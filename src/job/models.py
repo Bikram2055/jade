@@ -12,6 +12,16 @@ class Category(TimeStampAbstractModel):
     category = models.CharField(max_length=30)
 
 
+class Required_Skill(TimeStampAbstractModel):
+    '''This class is for skills set required to fullfill specific project'''
+
+    skill = models.CharField(max_length=30)
+    '''CharField: for skill required for project'''
+
+    def __str__(self) -> str:
+        return self.skill
+
+
 class Job(TimeStampAbstractModel):
     '''This class for add jobs by employer'''
 
@@ -31,21 +41,10 @@ class Job(TimeStampAbstractModel):
     '''ForeginKey: for which employer add the project'''
     is_draft = models.BooleanField(default=False)
     '''BooleanField: for status of project to save as draft'''
+    skill = models.ManyToManyField(Required_Skill)
 
     def __str__(self) -> str:
         return self.name
-
-
-class Required_Skill(TimeStampAbstractModel):
-    '''This class is for skills set required to fullfill specific project'''
-
-    skill = models.CharField(max_length=30)
-    '''CharField: for skill required for project'''
-    job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    '''ForeignKey: for link specific jobs to required skills'''
-
-    def __str__(self) -> str:
-        return self.skill
 
 
 class Project(TimeStampAbstractModel):
