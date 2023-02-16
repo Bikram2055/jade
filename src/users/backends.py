@@ -7,7 +7,7 @@ from src.users.models import User
 
 class EmailOrUsernameModelBackend(ModelBackend):
     def authenticate(self, request, **kwargs):
-        username = kwargs['email']
+        username = kwargs['username']
         password = kwargs['password']
 
         if username and re.search(r'[^@\s]+@[^@\s]+\.[^@\s]+', username):
