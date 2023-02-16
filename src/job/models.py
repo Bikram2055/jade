@@ -50,13 +50,13 @@ class Job(TimeStampAbstractModel):
 class Project(TimeStampAbstractModel):
     '''This class for Project status'''
 
-    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='job_project')
     '''ForeignKey: for specific project status'''
     job_seeker = models.ForeignKey(Job_Seeker, on_delete=models.CASCADE)
     '''ForeignKey: for specific employee who is doing such project'''
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
     '''ForeignKey: for specific employer who add such project'''
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     '''BooleanField: for status of project is active or not'''
     is_finished = models.BooleanField()
     '''BooleanField: for status of project is finished or not'''

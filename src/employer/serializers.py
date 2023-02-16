@@ -7,7 +7,7 @@ from src.users.serializers import UsernameSerializer
 class EmployerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employer
-        fields = ['username', 'description', 'phone']
+        fields = ['user', 'description', 'phone']
 
 
 class EmployernameSerializer(serializers.ModelSerializer):

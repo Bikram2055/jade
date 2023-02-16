@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Count
+from django.db.models import Count, OuterRef, Subquery
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, generics, permissions, status
 from rest_framework.pagination import PageNumberPagination
@@ -8,12 +8,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from src.common.permissions import IsEmployer
-from src.job.models import Bid, Job
+from src.job.models import Bid, Job, Project
 from src.job.serializers import (
     BidperJobSerializer,
     BidSerializer,
     CategorywiseJobSerializer,
     JobSerializer,
+    ProjectSerializer,
     ShortlistSerializer,
 )
 
@@ -186,7 +187,8 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 class JobApi(generics.ListCreateAPIView):
 
-    queryset = Job.objects.all()
+    subquery = Project.objects.filter(job=OuterRef('pk')).values('job')
+    queryset = Job.objects.annotate(is_in_project=Subquery(subquery)).filter(is_in_project=None, is_draft=False)
     serializer_class = JobSerializer
     permission_classes = [permissions.IsAuthenticated, IsEmployer]
     pagination_class = LargeResultsSetPagination
@@ -199,3 +201,20 @@ class BidsPerJob(APIView):
         if serializer.is_valid():
             pass
         return Response(serializer.data)
+
+
+class ProjectApi(APIView):
+    def get(self, request):
+        data = Project.objects.all()
+        serializer = ProjectSerializer(data=data, many=True)
+        if serializer.is_valid():
+            pass
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+
+        serializer = ProjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

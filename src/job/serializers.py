@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from src.employer.serializers import EmployernameSerializer
-from src.job.models import Bid, Category, Job, Rating, Required_Skill
+from src.job.models import Bid, Category, Job, Project, Rating, Required_Skill
 
 
 class RequireskillSerializer(serializers.ModelSerializer):
@@ -95,3 +95,9 @@ class ShortlistSerializer(serializers.ModelSerializer):
         model = Bid
         fields = ['project', 'job_seeker', 'is_shortlisted']
         depth = 1
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        Model = Project
+        fields = ['job', 'job_seeker', 'employer', 'is_active', 'is_finished']
