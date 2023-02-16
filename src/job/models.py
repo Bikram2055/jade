@@ -58,7 +58,7 @@ class Project(TimeStampAbstractModel):
     '''ForeignKey: for specific employer who add such project'''
     is_active = models.BooleanField(default=True)
     '''BooleanField: for status of project is active or not'''
-    is_finished = models.BooleanField()
+    is_finished = models.BooleanField(default=False)
     '''BooleanField: for status of project is finished or not'''
 
 

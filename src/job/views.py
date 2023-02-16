@@ -2,6 +2,8 @@ import datetime
 
 from django.db.models import Count, OuterRef, Subquery
 from django.shortcuts import get_object_or_404
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import filters, generics, permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -195,6 +197,10 @@ class JobApi(generics.ListCreateAPIView):
 
 
 class BidsPerJob(APIView):
+    """This code defines a Django Rest Framework API view named BidsPerJob.
+    The view handles GET requests and returns a serialized representation of the number of bids per job.
+    """
+
     def get(self, request):
         data = Bid.objects.values('job__name').annotate(count=Count('id'))
         serializer = BidperJobSerializer(data=data, many=True)
@@ -203,15 +209,51 @@ class BidsPerJob(APIView):
         return Response(serializer.data)
 
 
-class ProjectApi(APIView):
+class ProjectApi(APIView):  # (generics.ListCreateAPIView):
+    """This code defines a Django Rest Framework API view named ProjectApi with two methods: get() and post().
+    The view handles GET and POST requests for a Project model.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+    # queryset = Project.objects.all()
+    # serializer_class = ProjectSerializer
+
     def get(self, request):
+        """This code defines a GET method for a Django Rest Framework API view that retrieves all
+        instances of the Project model from the database, serializes them using the ProjectSerializer,
+        and returns the serialized data in a HTTP response.
+
+        Args:
+            request (object): used to get data from endpoint
+
+        Returns:
+            projects(json_object): all projects available in project table
+        """
         data = Project.objects.all()
         serializer = ProjectSerializer(data=data, many=True)
         if serializer.is_valid():
             pass
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter('job_id', openapi.IN_QUERY, "ID of job", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('employer_id', openapi.IN_QUERY, "ID of employer", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('job_seeker_id', openapi.IN_QUERY, "ID of job-seeker", type=openapi.TYPE_INTEGER),
+        ],
+        operation_id='this_is_the_view_to_assign_employer_for_job',
+    )
     def post(self, request):
+        """This code defines a POST method for a Django Rest Framework API view that retrieves all
+        instances of the Project model from the database, serializes them using the ProjectSerializer,
+        and returns the serialized data in a HTTP response.
+
+        Args:
+            request (_type_): used to get data from endpoint
+
+        Returns:
+            project(object): recently added project
+        """
 
         serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():

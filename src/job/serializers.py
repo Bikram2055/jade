@@ -99,5 +99,5 @@ class ShortlistSerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
-        Model = Project
+        model = Project
         fields = ['job', 'job_seeker', 'employer', 'is_active', 'is_finished']
