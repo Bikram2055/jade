@@ -135,7 +135,8 @@ class SearchJob(generics.ListAPIView):
 
     search_fields = ['name', 'description']
     filter_backends = (filters.SearchFilter,)
-    queryset = Job.objects.all()
+    subquery = Project.objects.filter(job=OuterRef('pk')).values('job')
+    queryset = Job.objects.annotate(is_in_project=Subquery(subquery)).filter(is_in_project=None, is_draft=False)
     serializer_class = JobSerializer
 
 

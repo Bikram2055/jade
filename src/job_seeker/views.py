@@ -2,6 +2,8 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from src.job.models import Project
+from src.job.serializers import ProjectSerializer
 from src.job_seeker.models import Job_Seeker, Skill
 from src.job_seeker.serializers import Job_SeekerSerializer, SeekerSkillSerializer
 
@@ -97,3 +99,12 @@ class Number_Of_Job_seekers(APIView):
         """
         no_of_job_seekers = Job_Seeker.objects.all().count()
         return Response({"Job_seekers count": no_of_job_seekers})
+
+
+class ProjectsApi(APIView):
+    def get(self, request, id):
+        data = Project.objects.filter(job_seeker=id)
+        serializer = ProjectSerializer(data=data, many=True)
+        if serializer.is_valid():
+            pass
+        return Response(serializer.data)
