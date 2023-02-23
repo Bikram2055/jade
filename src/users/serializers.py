@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from src.users.models import User
+from src.users.models import Address, User
 
 
 class UsernameSerializer(serializers.ModelSerializer):
@@ -49,3 +49,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ('tokens',)
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['user', 'country', 'city', 'street']

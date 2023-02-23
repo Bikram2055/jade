@@ -8,6 +8,8 @@ from src.employer.models import Employer
 from src.employer.serializers import EmployerSerializer
 from src.job.models import Job, Rating
 from src.job.serializers import JobSerializer, RateSerializer
+from src.users.models import Address
+from src.users.serializers import AddressSerializer
 
 # Create your views here.
 
@@ -63,3 +65,14 @@ class DraftJob(LoginRequiredMixin, generics.ListAPIView):
     queryset = Job.objects.filter(is_draft=True)
     serializer_class = JobSerializer
     permission_classes = [IsEmployer]
+
+
+class EmployerAddress(APIView):
+    def get(self, request, id):
+
+        data = Employer.objects.get(id=id)
+        data = Address.objects.filter(user=data.user)
+        serializer = AddressSerializer(data=data, many=True)
+        if serializer.is_valid():
+            pass
+        return Response(serializer.data)

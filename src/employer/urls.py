@@ -8,4 +8,5 @@ urlpatterns = [
     path("no-of-employers/", views.Number_Of_Employers.as_view()),
     path("rate/", views.RateApi.as_view()),
     path("drafed-job/", views.DraftJob.as_view()),
+    path("address/<int:id>", views.EmployerAddress.as_view()),
 ]

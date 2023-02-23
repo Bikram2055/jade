@@ -9,4 +9,6 @@ urlpatterns = [
     path("skill-update/<int:pk>", views.SeekerSkillUpdate.as_view(), name="update-skills"),
     path("no-of-jobseekers/", views.Number_Of_Job_seekers.as_view()),
     path("projects/<int:id>", views.ProjectsApi.as_view()),
+    path("address/<int:id>", views.EmployeeAddress.as_view()),
+    path("search-emp-address/", views.LocationSearch.as_view()),
 ]

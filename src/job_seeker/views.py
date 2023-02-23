@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import filters, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -6,6 +6,8 @@ from src.job.models import Project
 from src.job.serializers import ProjectSerializer
 from src.job_seeker.models import Job_Seeker, Skill
 from src.job_seeker.serializers import Job_SeekerSerializer, SeekerSkillSerializer
+from src.users.models import Address
+from src.users.serializers import AddressSerializer
 
 # from src.users.models import User
 
@@ -108,3 +110,22 @@ class ProjectsApi(APIView):
         if serializer.is_valid():
             pass
         return Response(serializer.data)
+
+
+class EmployeeAddress(APIView):
+    def get(self, request, id):
+
+        data = Job_Seeker.objects.get(id=id)
+        data = Address.objects.filter(user=data.user)
+        serializer = AddressSerializer(data=data, many=True)
+        if serializer.is_valid():
+            pass
+        return Response(serializer.data)
+
+
+class LocationSearch(generics.ListAPIView):
+
+    search_fields = ['country', 'city']
+    filter_backends = filters.SearchFilter
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
