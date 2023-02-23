@@ -126,6 +126,6 @@ class EmployeeAddress(APIView):
 class LocationSearch(generics.ListAPIView):
 
     search_fields = ['country', 'city']
-    filter_backends = filters.SearchFilter
+    filter_backends = (filters.SearchFilter,)
     queryset = Address.objects.all()
     serializer_class = AddressSerializer

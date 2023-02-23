@@ -55,3 +55,9 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ['user', 'country', 'city', 'street']
+
+
+class Address_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['country', 'city', 'street']
