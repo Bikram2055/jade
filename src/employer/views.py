@@ -52,6 +52,22 @@ class Number_Of_Employers(APIView):
 
 
 class RateApi(generics.ListCreateAPIView):
+    """This is an example of a Django REST Framework (DRF) view that inherits from generics.ListCreateAPIView.
+
+    The ListCreateAPIView class is a generic view that provides both list and create functionalities for a model.
+    In this case, the RateApi view is designed to work with the Rating model.
+
+    The queryset attribute specifies the queryset of Rating objects to be used in the view. In this case,
+    it's set to Rating.objects.all(), which will return all Rating objects.
+
+    The serializer_class attribute specifies the serializer to be used to convert Rating objects to and from
+    JSON format. In this case, it's set to RateSerializer, which is a custom serializer defined elsewhere in
+    the codebase.
+
+    The permission_classes attribute specifies the permission classes that will be used to check if a user has
+    permission to access this view. In this case, it's set to IsEmployer, which is a custom permission class
+    that checks if the user making the request is an employer.
+    """
 
     queryset = Rating.objects.all()
     serializer_class = RateSerializer
